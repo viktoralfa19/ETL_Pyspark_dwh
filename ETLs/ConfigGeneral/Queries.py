@@ -27,10 +27,10 @@ class Queries:
                 
         query = "INSERT INTO cen_dws.dim_agente\
         VALUES({0}, '{1}', '{2}', '{3}', '{4}','{5}',\
-        {6}, '{7}', '{8}', '{9}', '{10}','{11}',\
-        {12}, '{13}', '{14}', '{15}', '{16}','{17}',\
-        {18}, '{19}', '{20}', '{21}', '{22}')\
-        ON CONFLICT (agt_empresa_id_bk,agt_und_negocio_id_bk,agt_estacion_id_bk,agt_elemento_id_bk) DO \
+        '{6}', '{7}', '{8}', '{9}', '{10}',{11},\
+        '{12}', '{13}', '{14}', '{15}', '{16}',{17},\
+        '{18}', '{19}', '{20}', '{21}', '{22}')\
+        ON CONFLICT (agt_empresa_id_bk,agt_und_negocio_id_bk,agt_clase_unegocio_id_bk,agt_estacion_id_bk,agt_elemento_id_bk) DO \
         UPDATE SET \
         agt_empresa_id_bk = EXCLUDED.agt_empresa_id_bk,\
         agt_empresa = EXCLUDED.agt_empresa,\
@@ -38,8 +38,8 @@ class Queries:
         agt_region = EXCLUDED.agt_region,\
         agt_und_negocio_id_bk = EXCLUDED.agt_und_negocio_id_bk,\
         agt_und_negocio = EXCLUDED.agt_und_negocio,\
-        agt_clase_id_bk = EXCLUDED.agt_clase_id_bk,\
-        agt_clase = EXCLUDED.agt_clase,\
+        agt_clase_unegocio_id_bk = EXCLUDED.agt_clase_unegocio_id_bk,\
+        agt_clase_unegocio = EXCLUDED.agt_clase_unegocio,\
         agt_estacion_id_bk = EXCLUDED.agt_estacion_id_bk,\
         agt_estacion = EXCLUDED.agt_estacion,\
         agt_tipo_estacion_id_bk = EXCLUDED.agt_tipo_estacion_id_bk,\

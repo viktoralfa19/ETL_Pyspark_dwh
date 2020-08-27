@@ -16,7 +16,7 @@ class DBContextDw:
         self.UserName = "user_sirio"
         self.Password ="Cen.2020.sirio"
         self.DataBase = Database      
-        self.conn = psycopg2.connect(host=self.HostDb, port = self.Port, database=self.DataBase, user=self.UserName, password=self.Password)
+        self.conn = None
         
     def GetDataDW(self, query):
         """Método para retornar datos de una data warehouse en dataframes, de una consulta SQL especificada."""        
@@ -57,6 +57,7 @@ class DBContextDw:
         """Método para insertar o actualizar datos de una dimensión a la bodega de datos DW.""" 
         
         try: 
+            self.conn = psycopg2.connect(host=self.HostDb, port = self.Port, database=self.DataBase, user=self.UserName, password=self.Password)
             cur = self.conn.cursor()
             cur.execute(query)
             Upsert_rows = cur.rowcount
