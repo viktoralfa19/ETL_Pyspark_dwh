@@ -10,7 +10,7 @@ class DBContextDw:
                   urlDriver='/home/jovyan/postgresql-42.2.12.jar',
                   HostDb='10.30.80.3',
                   Port='5432'):
-        self.spark = SparkSession.builder.config(driverClass, urlDriver).getOrCreate()
+        self.spark = SparkSession.builder.config(driverClass, urlDriver).appName("Sirio").getOrCreate()
         self.HostDb = HostDb
         self.Port = Port
         self.UserName = "user_sirio"

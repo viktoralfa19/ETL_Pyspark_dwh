@@ -60,3 +60,90 @@ class Queries:
         
         return (pk,query)
 
+    @staticmethod
+    def Upsert_Query_Dim_Elemento_Demanda(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_agt_elemento_demanda\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (eldem_elemento_id_bk) DO \
+        UPDATE SET \
+        eldem_elemento_id_bk = EXCLUDED.eldem_elemento_id_bk,\
+        eldem_elemento = EXCLUDED.eldem_elemento,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Agente_Central(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_agt_central\
+        VALUES({0}, '{1}', '{2}', '{3}', '{4}','{5}',\
+        '{6}', '{7}', '{8}', '{9}')\
+        ON CONFLICT (agt_cent_empresa_id_bk,agt_cent_unegocio_id_bk,agt_cent_central_id_bk) DO \
+        UPDATE SET \
+        agt_cent_empresa_id_bk = EXCLUDED.agt_cent_empresa_id_bk,\
+        agt_cent_empresa = EXCLUDED.agt_cent_empresa,\
+        agt_cent_region_id_bk = EXCLUDED.agt_cent_region_id_bk,\
+        agt_cent_region = EXCLUDED.agt_cent_region,\
+        agt_cent_unegocio_id_bk = EXCLUDED.agt_cent_unegocio_id_bk,\
+        agt_cent_unegocio = EXCLUDED.agt_cent_unegocio,\
+        agt_cent_central_id_bk = EXCLUDED.agt_cent_central_id_bk,\
+        agt_cent_central = EXCLUDED.agt_cent_central,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3],values[4],values[5],\
+                                                    values[6],values[7],values[8])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Agente_Interconexion(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_agt_interconexion\
+        VALUES({0}, '{1}', '{2}', '{3}', '{4}','{5}',\
+        '{6}', '{7}', '{8}', '{9}')\
+        ON CONFLICT (agt_int_empresa_id_bk,agt_int_unegocio_id_bk,agt_int_linea_id_bk) DO \
+        UPDATE SET \
+        agt_int_empresa_id_bk = EXCLUDED.agt_int_empresa_id_bk,\
+        agt_int_empresa = EXCLUDED.agt_int_empresa,\
+        agt_int_region_id_bk = EXCLUDED.agt_int_region_id_bk,\
+        agt_int_region = EXCLUDED.agt_int_region,\
+        agt_int_unegocio_id_bk = EXCLUDED.agt_int_unegocio_id_bk,\
+        agt_int_unegocio = EXCLUDED.agt_int_unegocio,\
+        agt_int_linea_id_bk = EXCLUDED.agt_int_linea_id_bk,\
+        agt_int_linea = EXCLUDED.agt_int_linea,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3],values[4],values[5],\
+                                                    values[6],values[7],values[8])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Origen(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_agt_origen\
+        VALUES({0}, '{1}', '{2}', '{3}', '{4}','{5}',\
+        '{6}', '{7}', '{8}', '{9}')\
+        ON CONFLICT (agtorg_empresa_id_bk,agtorg_und_negocio_id_bk,agtorg_clase_unegocio_id_bk) DO \
+        UPDATE SET \
+        agtorg_empresa_id_bk = EXCLUDED.agtorg_empresa_id_bk,\
+        agtorg_empresa = EXCLUDED.agtorg_empresa,\
+        agtorg_region_id_bk = EXCLUDED.agtorg_region_id_bk,\
+        agtorg_region = EXCLUDED.agtorg_region,\
+        agtorg_und_negocio_id_bk = EXCLUDED.agtorg_und_negocio_id_bk,\
+        agtorg_und_negocio = EXCLUDED.agtorg_und_negocio,\
+        agtorg_clase_unegocio_id_bk = EXCLUDED.agtorg_clase_unegocio_id_bk,\
+        agtorg_clase_unegocio = EXCLUDED.agtorg_clase_unegocio,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3],values[4],values[5],\
+                                                    values[6],values[7],values[8])
+        
+        return (pk,query)
