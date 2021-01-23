@@ -42,12 +42,23 @@ class ETLAgenteOrigenBL():
         """Método que realiza la extracción de datos de Agentes desde el HDFS"""
         self._genericDataFrame=GenericDataFrame(HDFSContext(DataBase='SIVO')) 
         agentes = self._genericDataFrame.GetDataHdfs('AGENTES','file_AGENTE_*')
+        unegocio = self._genericDataFrame.GetDataHdfs('CFG_UnidadNegocio','file_CFG_UnidadNegocio')
+        tipo = self._genericDataFrame.GetDataHdfs('CFG_TipoUnidadNegocio','file_CFG_TipoUnidadNegocio')
+        
+        unegocio = unegocio\
+        .join(tipo, unegocio.IdTipoUnidadNegocio==tipo.IdTipoUnidadNegocio)\
+        .select(tipo.Codigo.alias('Tipo'),unegocio.Codigo, unegocio.Nombre).distinct()
+        
+        
         agentes = agentes.select(col('EMPRESA_CODIGO').alias('agtorg_empresa_id_bk'),upper(col('EMPRESA_NOMBRE')).alias('agtorg_empresa'),
                                  col('REGION_CODIGO').alias('agtorg_region_id_bk'),upper(col('REGION_NOMBRE')).alias('agtorg_region'),
                                  col('UNEGOCIO_CODIGO').alias('agtorg_und_negocio_id_bk'),
                                  upper(col('UNEGOCIO_NOMBRE')).alias('agtorg_und_negocio'),
                                  col('CLASE_UNEGOCIO_CODIGO').alias('agtorg_clase_unegocio_id_bk'),
-                                 upper(col('CLASE_UNEGOCIO_NOMBRE')).alias('agtorg_clase_unegocio'))
+                                 upper(col('CLASE_UNEGOCIO_NOMBRE')).alias('agtorg_clase_unegocio'))\
+        .join(unegocio,
+              (col('agtorg_clase_unegocio_id_bk')==unegocio.Tipo) &\
+              (col('agtorg_und_negocio_id_bk')==unegocio.Codigo)).distinct()
         
         return agentes
     
@@ -72,6 +83,20 @@ class ETLAgenteOrigenBL():
                     extract_data.agtorg_clase_unegocio)
 
         extract_data = extract_data.distinct()
+        
+        schema = StructType([StructField('agtorg_empresa_id_bk', StringType(), False),
+                             StructField('agtorg_empresa', StringType(), False),
+                             StructField('agtorg_region_id_bk', StringType(), False),
+                             StructField('agtorg_region', StringType(), False),
+                             StructField('agtorg_und_negocio_id_bk', StringType(), False),
+                             StructField('agtorg_und_negocio', StringType(), False),
+                             StructField('agtorg_clase_unegocio_id_bk', StringType(), False),
+                             StructField('agtorg_clase_unegocio', StringType(), False)])
+        
+        agente_adicional = self._accesoDatos._dBContextDw.spark.createDataFrame([('NA','No Aplica','NA','No Aplica',
+                                                                                  'NA','No Aplica','NA','No Aplica')],schema)
+        extract_data = extract_data.union(agente_adicional)
+
         
         if self.catalogoDW.count()==0: 
             catalogos = extract_data.select((maxPk+row_number().over(Window.partitionBy()\

@@ -101,6 +101,38 @@ class ETLAgenteBL():
                  'agt_tipo_elemento','agt_elemento_id_bk','agt_elemento')\
         .agg(Funct.min('agt_operacion_comercial').alias('agt_operacion_comercial')).distinct()
         
+        
+        schema = StructType([StructField('agt_empresa_id_bk', StringType(), False),
+                             StructField('agt_empresa', StringType(), False),
+                             StructField('agt_region_id_bk', StringType(), False),
+                             StructField('agt_region', StringType(), False),
+                             StructField('agt_und_negocio_id_bk', StringType(), False),
+                             StructField('agt_und_negocio', StringType(), False),
+                             StructField('agt_clase_unegocio_id_bk', StringType(), False),
+                             StructField('agt_clase_unegocio', StringType(), False),
+                             StructField('agt_estacion_id_bk', StringType(), False),
+                             StructField('agt_estacion', StringType(), False),
+                             StructField('agt_tipo_estacion_id_bk', ShortType(), False),
+                             StructField('agt_tipo_estacion', StringType(), False),
+                             StructField('agt_grupo_gen_id_bk', StringType(), False),
+                             StructField('agt_grupo_gen', StringType(), False),
+                             StructField('agt_voltaje_id_bk', StringType(), False),
+                             StructField('agt_voltaje', StringType(), False),
+                             StructField('agt_tipo_elemento_id_bk', ShortType(), False),
+                             StructField('agt_tipo_elemento', StringType(), False),
+                             StructField('agt_elemento_id_bk', StringType(), False),
+                             StructField('agt_elemento', StringType(), False),
+                             StructField('agt_operacion_comercial', TimestampType(), False)])
+        
+        agente_adicional = self._accesoDatos._dBContextDw.spark.createDataFrame([('NA','No Aplica','NA','No Aplica',
+                                                                                  'NA','No Aplica','NA','No Aplica',
+                                                                                  'NA','No Aplica',-1,'No Aplica',
+                                                                                  'NA','No Aplica','NA','No Aplica',
+                                                                                  -1,'No Aplica','NA','No Aplica',
+                                                                                  datetime.datetime(1900,1,1,0,0))],schema)
+        extract_data = extract_data.union(agente_adicional)
+        
+        
         if self.catalogoDW.count()==0: 
             catalogos = extract_data.select((maxPk+row_number().over(Window.partitionBy()\
                             .orderBy(extract_data.agt_empresa_id_bk,

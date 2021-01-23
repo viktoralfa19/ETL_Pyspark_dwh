@@ -7,6 +7,15 @@ class EtlAL:
         self._dBContextDw = DBContextDw
         
     # ------ GET METHODS -----------------#
+    
+    def GetData(self,query):
+        """Método que obtiene todos los datos de cualquier consulta del DW"""
+        try:            
+            data = self._dBContextDw.GetDataDW(query)
+            return data
+        except Exception as error:
+            ExceptionManager.Treatment(error)
+            raise
         
     def GetAllData(self,tableName):
         """Método que obtiene todos los datos de cualquier objeto del DW"""

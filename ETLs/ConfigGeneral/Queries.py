@@ -147,3 +147,206 @@ class Queries:
                                                     values[6],values[7],values[8])
         
         return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Asignacion_Origen(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_asignacion_origen\
+        VALUES({0}, '{1}', '{2}', '{3}','{4}')\
+        ON CONFLICT (asigorg_origen_id_bk) DO \
+        UPDATE SET \
+        asigorg_origen_id_bk = EXCLUDED.asigorg_origen_id_bk,\
+        asigorg_origen = EXCLUDED.asigorg_origen,\
+        asigorg_nombre = EXCLUDED.asigorg_nombre,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Clasificacion_Falla(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_clasificacion_fallas\
+        VALUES({0}, {1}, '{2}', {3}, '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')\
+        ON CONFLICT (clsf_clasif_id_bk,clsf_grupo_id_bk,clsf_nivel_dos_id_bk,clsf_nivel_uno_id_bk) DO \
+        UPDATE SET \
+        clsf_clasif_id_bk = EXCLUDED.clsf_clasif_id_bk,\
+        clsf_clasif = EXCLUDED.clsf_clasif,\
+        clsf_grupo_id_bk = EXCLUDED.clsf_grupo_id_bk,\
+        clsf_grupo = EXCLUDED.clsf_grupo,\
+        clsf_nivel_dos_id_bk = EXCLUDED.clsf_nivel_dos_id_bk,\
+        clsf_nivel_dos = EXCLUDED.clsf_nivel_dos,\
+        clsf_nivel_uno_id_bk = EXCLUDED.clsf_nivel_uno_id_bk,\
+        clsf_nivel_uno = EXCLUDED.clsf_nivel_uno,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3],values[4],values[5],values[6],values[7],
+                                                    values[8])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Componente_Demanda(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_componente_demanda\
+        VALUES({0}, '{1}', '{2}')\
+        ON CONFLICT (compdem_componente) DO \
+        UPDATE SET \
+        compdem_componente = EXCLUDED.compdem_componente,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Grupo_Combustible(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_grupo_combustible\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (grcomb_id_bk) DO \
+        UPDATE SET \
+        grcomb_id_bk = EXCLUDED.grcomb_id_bk,\
+        grcomb_nombre = EXCLUDED.grcomb_nombre,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1], values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Modo_Agc(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_modo_agc\
+        VALUES({0}, '{1}', '{2}')\
+        ON CONFLICT (agcmodo_nombre) DO \
+        UPDATE SET \
+        agcmodo_nombre = EXCLUDED.agcmodo_nombre,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Nro_Redespacho(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_nro_redespacho\
+        VALUES({0}, {1}, '{2}', '{3}')\
+        ON CONFLICT (nro_valor) DO \
+        UPDATE SET \
+        nro_valor = EXCLUDED.nro_valor,\
+        nro_nombre = EXCLUDED.nro_nombre,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Parametros_Hidro(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_param_hidrologicos\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (paramhid_id_bk) DO \
+        UPDATE SET \
+        paramhid_id_bk = EXCLUDED.paramhid_id_bk,\
+        paramhid_nombre = EXCLUDED.paramhid_nombre,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Pasos(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_pasos\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (pasos_numero) DO \
+        UPDATE SET \
+        pasos_numero = EXCLUDED.pasos_numero,\
+        pasos_nombre_paso = EXCLUDED.pasos_nombre_paso,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Tipo_Combustible(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_tipo_combustible\
+        VALUES({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')\
+        ON CONFLICT (tipcomb_gpl_id_bk,tipcomb_gop_id_bk,tipcomb_gtc_id_bk) DO \
+        UPDATE SET \
+        tipcomb_gpl_id_bk = EXCLUDED.tipcomb_gpl_id_bk,\
+        tipcomb_gpl_combustible = EXCLUDED.tipcomb_gpl_combustible,\
+        tipcomb_gop_id_bk = EXCLUDED.tipcomb_gop_id_bk,\
+        tipcomb_gop_combustible = EXCLUDED.tipcomb_gop_combustible,\
+        tipcomb_gtc_id_bk = EXCLUDED.tipcomb_gtc_id_bk,\
+        tipcomb_gtc_combustible = EXCLUDED.tipcomb_gtc_combustible,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1],values[2],values[3],values[4],values[5],values[6])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Tipo_Generacion(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_tipo_generacion\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (tipgen_id_bk) DO \
+        UPDATE SET \
+        tipgen_id_bk = EXCLUDED.tipgen_id_bk,\
+        tipgen_tipo_generacion = EXCLUDED.tipgen_tipo_generacion,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1], values[2])
+        
+        return (pk,query)
+    
+    
+    @staticmethod
+    def Upsert_Query_Dim_Tipo_Tecnologia(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_tipo_tecnologia\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (tiptec_id_bk) DO \
+        UPDATE SET \
+        tiptec_id_bk = EXCLUDED.tiptec_id_bk,\
+        tiptec_tipo_tecnologia = EXCLUDED.tiptec_tipo_tecnologia,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0],values[1], values[2])
+        
+        return (pk,query)
+    
+    @staticmethod
+    def Upsert_Query_Dim_Ltc(x):
+        
+        pk = x[0]
+        values = x[1]
+                
+        query = "INSERT INTO cen_dws.dim_agt_ltc\
+        VALUES({0}, '{1}', '{2}', '{3}')\
+        ON CONFLICT (ltc_elemento_id_bk) DO \
+        UPDATE SET \
+        ltc_elemento_id_bk = EXCLUDED.ltc_elemento_id_bk,\
+        ltc_elemento = EXCLUDED.ltc_elemento,\
+        fecha_carga = EXCLUDED.fecha_carga;".format(pk, values[0], values[1], values[2])
+        
+        return (pk,query)
